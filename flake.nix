@@ -16,17 +16,36 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+
+	  pyglet15 = pkgs.python314Packages.pyglet.overrideAttrs (oldAttrs: rec {
+	    version = "1.5.27";
+	    src = pkgs.fetchFromGitHub {
+              owner = "pyglet";
+              repo = "pyglet";
+              tag = "v${version}";
+              hash = "sha256-tdwNnTb8ZmF8CORoA27LWLcM5ykmrDGdaJGNwtEARuE=";
+            };
+	    propagatedBuildInputs = [ pkgs.python314Packages.setuptools ];
+	  });
         in
         {
           default = pkgs.mkShell {
             packages = [
               # python
-              pkgs.python3
+              pkgs.python314
               pkgs.uv
 
+	      # specially overridden pyglet to patch site package paths
+	      pyglet15
+
               # build tools
-              pkgs.swig
               pkgs.cmake
+              pkgs.swig
+              pkgs.SDL2
+              pkgs.pkg-config
+
+              # dependencies
+              pkgs.ffmpeg_7
               pkgs.zlib
 
               # typesetting program
@@ -42,14 +61,9 @@
             shellHook = ''
               export UV_CACHE_DIR=/media/oldhdd/.cache/uv
               unset PYTHONPATH
-              uv sync
+	      uv sync
               . .venv/bin/activate
-              cd ./Multi-Agent-ALE
-              python setup.py install
-              cd ..
-              uv pip install pettingzoo[all]
             '';
-            #   uv run --with jupyter jupyter lab
           };
         }
       );
