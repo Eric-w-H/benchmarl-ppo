@@ -33,6 +33,7 @@
             packages = [
               # python
               pkgs.python314
+	      pkgs.python314Packages.setuptools
               pkgs.uv
 
 	      # specially overridden pyglet to patch site package paths
@@ -47,6 +48,7 @@
               # dependencies
               pkgs.ffmpeg_7
               pkgs.zlib
+	      pkgs.libx11
 
               # typesetting program
               pkgs.typst
@@ -63,6 +65,7 @@
               unset PYTHONPATH
 	      uv sync
               . .venv/bin/activate
+	      uv pip install pyglet@${pyglet15}/lib/python3.14/site-packages/pyglet
             '';
           };
         }

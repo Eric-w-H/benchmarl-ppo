@@ -10,9 +10,13 @@ dependencies = [
         "torchrl>=0.10, <0.12",
         "torchvision",
         "pytorch-triton-rocm>=3.5.1 ; sys_platform == 'linux'",
-        "benchmarl[vmas]>=1.5.2", # "benchmarl[vmas,pettingzoo]",
-        "pyglet",
+        "benchmarl[vmas]>=1.5.2", "pettingzoo[classic,butterfly,mpe,sisl,other]",
+        # "pyglet",
+	"id-marl-eval",
 ]
+
+[tool.uv]
+  override-dependencies = ["pandas==3.0.1", "arch>=8.0"]
 
 [tool.uv.sources]
 torch = [
@@ -26,7 +30,6 @@ torchvision = [
 pytorch-triton-rocm = [
   { index = "pytorch-rocm", marker = "sys_platform == 'linux'" },
 ]
-pyglet = { path = "../../../nix/store/fvm0j30c56ar82sx9j29gdj31bkbmj5w-python3.14-pyglet-1.5.27-dist/pyglet-1.5.27-py3-none-any.whl" }
 
 [[tool.uv.index]]
 name = "pytorch-rocm"
