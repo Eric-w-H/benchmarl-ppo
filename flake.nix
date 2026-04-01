@@ -52,6 +52,9 @@
 
               # typesetting program
               pkgs.typst
+
+              # tools
+	      pkgs.zip
             ];
 
             env = lib.optionalAttrs pkgs.stdenv.isLinux {
@@ -65,8 +68,8 @@
               unset PYTHONPATH
 	      uv sync
               . .venv/bin/activate
-	      uv pip install pyglet@${pyglet15}/lib/python3.14/site-packages/pyglet
-            '';
+	      uv pip install pyglet@pyglet@/nix/store/fvm0j30c56ar82sx9j29gdj31bkbmj5w-python3.14-pyglet-1.5.27-dist/pyglet-1.5.27-py3-none-any.whl
+	      '';
           };
         }
       );

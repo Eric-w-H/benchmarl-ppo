@@ -25,7 +25,7 @@ experiment_config.loggers = ['csv']
 
 benchmark = Benchmark(
     algorithm_configs=[
-        # IppoConfig.get_from_yaml(),
+        IppoConfig.get_from_yaml(),
         MappoConfig.get_from_yaml(),
     ],
     tasks=[
